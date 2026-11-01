@@ -2,7 +2,7 @@
 
 Live presentation: https://aryacooks.github.io/cash-or-click/
 
-A self-contained, 20-slide HTML presentation built with native JavaScript, Canvas, SVG and CSS. No runtime libraries or build step. All order data and geographic geometry are embedded in `index.html`; Google Fonts are optional and have local fallbacks.
+A self-contained, 12-slide HTML presentation built with native JavaScript, Canvas, SVG and CSS. No runtime libraries or build step. All order data and geographic geometry are embedded in `index.html`; Google Fonts are optional and have local fallbacks.
 
 Run locally:
 
@@ -10,7 +10,7 @@ Run locally:
 python3 -m http.server 5173 --bind 127.0.0.1
 ```
 
-Open http://127.0.0.1:5173. Use Next/Back, left/right arrows, Page Up/Down, Home/End, or the slide index. N opens presenter notes; F toggles fullscreen. Each analytical slide offers its calculation details. Range controls retain their normal keyboard behaviour. Reduced-motion preferences are respected. The theme menu offers Story (the original act-based colours), Paper, and Midnight; the choice persists in browser storage. Every slide has an ongoing concept-specific animation. The CLT keeps sampling from the workbook into a rolling window of up to 1,800 means.
+Open http://127.0.0.1:5173. Use Next/Back, left/right arrows, Page Up/Down, Home/End, or the slide index. N opens presenter notes; F toggles fullscreen. Notes reveal every calculation one step at a time (Show step / → key), and a number first worked out earlier is tagged with the slide it came from. The histogram, CLT and chi-square-onward slides are skipped in this edition but remain in the source. Range controls retain their normal keyboard behaviour. Reduced-motion preferences are respected. The theme menu offers Story (the original act-based colours), Paper, and Midnight; the choice persists in browser storage. Every slide has an ongoing concept-specific animation. The CLT keeps sampling from the workbook into a rolling window of up to 1,800 means.
 
 ## Data and methods
 
