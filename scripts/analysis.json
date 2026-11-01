@@ -1,0 +1,767 @@
+{
+  "source": "amazon_synthetic_1500_orders.xlsx",
+  "sha256": "f5319add43b87a988f3e7ea699f9f0fb79520b591753527e94e5cd72e2750152",
+  "all": {
+    "n": 1500,
+    "cancel": 171,
+    "returned": 98,
+    "rate": 0.114,
+    "returnRate": 0.07373965387509406,
+    "mean": 1688.4945,
+    "median": 1066.7350000000001,
+    "sd": 1659.2861050995198,
+    "variance": 2753230.3785763346,
+    "iqr": 1579.17,
+    "cv": 0.9827015161136265,
+    "total": 2532741.75,
+    "delivered": 1891502.3699999999,
+    "settledValue": 2371118.95,
+    "settledN": 1395,
+    "settledMean": 1699.7268458781364,
+    "keepPlaced": 0.7468200695945412,
+    "keepSettled": 0.7977256349792151,
+    "outcomes": {
+      "Delivered": 1126,
+      "Returned": 98,
+      "Cancelled": 171,
+      "In Transit": 105
+    }
+  },
+  "cod": {
+    "n": 469,
+    "cancel": 95,
+    "returned": 19,
+    "rate": 0.2025586353944563,
+    "returnRate": 0.05080213903743316,
+    "mean": 1725.2491897654586,
+    "median": 1033.06,
+    "sd": 1721.9375255687225,
+    "variance": 2965068.8419617354,
+    "iqr": 1722.89,
+    "cv": 0.9980804719594238,
+    "total": 809141.8700000001,
+    "delivered": 551265.5,
+    "settledValue": 770721.13,
+    "settledN": 444,
+    "settledMean": 1735.858400900901,
+    "keepPlaced": 0.6812964702963646,
+    "keepSettled": 0.7152593571685261,
+    "outcomes": {
+      "Delivered": 330,
+      "Returned": 19,
+      "Cancelled": 95,
+      "In Transit": 25
+    }
+  },
+  "pre": {
+    "n": 1031,
+    "cancel": 76,
+    "returned": 79,
+    "rate": 0.07371483996120272,
+    "returnRate": 0.08272251308900523,
+    "mean": 1671.7748593598446,
+    "median": 1087.63,
+    "sd": 1630.5691220512979,
+    "variance": 2658755.6617871406,
+    "iqr": 1523.795,
+    "cv": 0.9753521013443609,
+    "total": 1723599.88,
+    "delivered": 1340236.87,
+    "settledValue": 1600397.82,
+    "settledN": 951,
+    "settledMean": 1682.85785488959,
+    "keepPlaced": 0.7775800436932034,
+    "keepSettled": 0.8374398248055599,
+    "outcomes": {
+      "Delivered": 796,
+      "Returned": 79,
+      "Cancelled": 76,
+      "In Transit": 80
+    }
+  },
+  "methods": [
+    {
+      "name": "COD",
+      "n": 469,
+      "cancel": 95,
+      "returned": 19,
+      "rate": 0.2025586353944563,
+      "returnRate": 0.05080213903743316,
+      "mean": 1725.2491897654586,
+      "median": 1033.06,
+      "sd": 1721.9375255687225,
+      "variance": 2965068.8419617354,
+      "iqr": 1722.89,
+      "cv": 0.9980804719594238,
+      "total": 809141.8700000001,
+      "delivered": 551265.5,
+      "settledValue": 770721.13,
+      "settledN": 444,
+      "settledMean": 1735.858400900901,
+      "keepPlaced": 0.6812964702963646,
+      "keepSettled": 0.7152593571685261,
+      "outcomes": {
+        "Delivered": 330,
+        "Returned": 19,
+        "Cancelled": 95,
+        "In Transit": 25
+      }
+    },
+    {
+      "name": "UPI",
+      "n": 547,
+      "cancel": 40,
+      "returned": 40,
+      "rate": 0.07312614259597806,
+      "returnRate": 0.07889546351084813,
+      "mean": 1629.3808592321755,
+      "median": 1069.31,
+      "sd": 1610.4298792950233,
+      "variance": 2593484.396126183,
+      "iqr": 1396.045,
+      "cv": 0.9883692140914908,
+      "total": 891271.33,
+      "delivered": 680290.85,
+      "settledValue": 814738.08,
+      "settledN": 496,
+      "settledMean": 1642.6170967741934,
+      "keepPlaced": 0.7632814240754272,
+      "keepSettled": 0.8349810407781603,
+      "outcomes": {
+        "Delivered": 416,
+        "Returned": 40,
+        "Cancelled": 40,
+        "In Transit": 51
+      }
+    },
+    {
+      "name": "Credit Card",
+      "n": 200,
+      "cancel": 17,
+      "returned": 16,
+      "rate": 0.085,
+      "returnRate": 0.08743169398907104,
+      "mean": 1683.97715,
+      "median": 1028.01,
+      "sd": 1721.4204394619476,
+      "variance": 2963288.3293973645,
+      "iqr": 1470.56,
+      "cv": 1.0222350341641795,
+      "total": 336795.43,
+      "delivered": 237856.9,
+      "settledValue": 308625.07,
+      "settledN": 185,
+      "settledMean": 1668.2436216216217,
+      "keepPlaced": 0.706235532946513,
+      "keepSettled": 0.7706985696268939,
+      "outcomes": {
+        "Delivered": 152,
+        "In Transit": 15,
+        "Returned": 16,
+        "Cancelled": 17
+      }
+    },
+    {
+      "name": "Debit Card",
+      "n": 152,
+      "cancel": 11,
+      "returned": 14,
+      "rate": 0.07236842105263158,
+      "returnRate": 0.09929078014184398,
+      "mean": 1657.4665131578947,
+      "median": 1077.625,
+      "sd": 1503.904127980009,
+      "variance": 2261727.6261553112,
+      "iqr": 1567.7375000000002,
+      "cv": 0.9073511386451419,
+      "total": 251934.91,
+      "delivered": 213813.27,
+      "settledValue": 243720.07,
+      "settledN": 145,
+      "settledMean": 1680.8280689655173,
+      "keepPlaced": 0.8486845669780341,
+      "keepSettled": 0.8772903684132373,
+      "outcomes": {
+        "Delivered": 120,
+        "Returned": 14,
+        "Cancelled": 11,
+        "In Transit": 7
+      }
+    },
+    {
+      "name": "Net Banking",
+      "n": 77,
+      "cancel": 5,
+      "returned": 4,
+      "rate": 0.06493506493506493,
+      "returnRate": 0.05555555555555555,
+      "mean": 2008.3867532467532,
+      "median": 1278.92,
+      "sd": 1873.340163896283,
+      "variance": 3509403.369666952,
+      "iqr": 2262.19,
+      "cv": 0.9327586735313036,
+      "total": 154645.78,
+      "delivered": 140283.69,
+      "settledValue": 151006.7,
+      "settledN": 74,
+      "settledMean": 2040.6310810810812,
+      "keepPlaced": 0.9071291179106213,
+      "keepSettled": 0.9289898395236768,
+      "outcomes": {
+        "Cancelled": 5,
+        "Delivered": 65,
+        "In Transit": 3,
+        "Returned": 4
+      }
+    },
+    {
+      "name": "Wallet",
+      "n": 55,
+      "cancel": 3,
+      "returned": 5,
+      "rate": 0.05454545454545454,
+      "returnRate": 0.09615384615384616,
+      "mean": 1617.3169090909096,
+      "median": 1090.55,
+      "sd": 1456.874872933401,
+      "variance": 2122484.3953847135,
+      "iqr": 1856.4150000000002,
+      "cv": 0.9007974038633575,
+      "total": 88952.43000000002,
+      "delivered": 67992.16,
+      "settledValue": 82307.9,
+      "settledN": 51,
+      "settledMean": 1613.8803921568626,
+      "keepPlaced": 0.7643654029462712,
+      "keepSettled": 0.8260708874846765,
+      "outcomes": {
+        "Delivered": 43,
+        "Cancelled": 3,
+        "In Transit": 4,
+        "Returned": 5
+      }
+    }
+  ],
+  "hist": [
+    286,
+    421,
+    223,
+    156,
+    100,
+    81,
+    61,
+    34,
+    37,
+    20,
+    81
+  ],
+  "cities": [
+    {
+      "name": "Delhi",
+      "n": 137,
+      "lat": 28.61,
+      "lon": 77.21
+    },
+    {
+      "name": "Bengaluru",
+      "n": 137,
+      "lat": 12.97,
+      "lon": 77.59
+    },
+    {
+      "name": "Ahmedabad",
+      "n": 133,
+      "lat": 23.02,
+      "lon": 72.57
+    },
+    {
+      "name": "Pune",
+      "n": 131,
+      "lat": 18.52,
+      "lon": 73.86
+    },
+    {
+      "name": "Kolkata",
+      "n": 130,
+      "lat": 22.57,
+      "lon": 88.36
+    },
+    {
+      "name": "Chennai",
+      "n": 127,
+      "lat": 13.08,
+      "lon": 80.27
+    },
+    {
+      "name": "Jaipur",
+      "n": 125,
+      "lat": 26.91,
+      "lon": 75.79
+    },
+    {
+      "name": "Kochi",
+      "n": 121,
+      "lat": 9.93,
+      "lon": 76.27
+    },
+    {
+      "name": "Hyderabad",
+      "n": 121,
+      "lat": 17.39,
+      "lon": 78.49
+    },
+    {
+      "name": "Lucknow",
+      "n": 114,
+      "lat": 26.85,
+      "lon": 80.95
+    },
+    {
+      "name": "Coimbatore",
+      "n": 113,
+      "lat": 11.02,
+      "lon": 76.96
+    },
+    {
+      "name": "Mumbai",
+      "n": 111,
+      "lat": 19.08,
+      "lon": 72.88
+    }
+  ],
+  "categories": [
+    {
+      "name": "Electronics",
+      "cod": {
+        "n": 118,
+        "cancel": 27,
+        "returned": 4,
+        "rate": 0.2288135593220339,
+        "returnRate": 0.04395604395604396,
+        "mean": 3737.632627118645,
+        "median": 3122.13,
+        "sd": 2099.1361031255633,
+        "variance": 4406372.379445176,
+        "iqr": 2502.6375,
+        "cv": 0.561621837281476,
+        "total": 441040.6500000001,
+        "delivered": 302785.35,
+        "settledValue": 423334.46,
+        "settledN": 113,
+        "settledMean": 3746.322654867257,
+        "keepPlaced": 0.6865248135290929,
+        "keepSettled": 0.715239080702289,
+        "outcomes": {
+          "Delivered": 82,
+          "Returned": 4,
+          "Cancelled": 27,
+          "In Transit": 5
+        }
+      },
+      "pre": {
+        "n": 222,
+        "cancel": 21,
+        "returned": 14,
+        "rate": 0.0945945945945946,
+        "returnRate": 0.06965174129353234,
+        "mean": 3588.0134234234233,
+        "median": 3008.375,
+        "sd": 1911.663188242253,
+        "variance": 3654456.1452805353,
+        "iqr": 2276.145,
+        "cv": 0.5327915374458889,
+        "total": 796538.98,
+        "delivered": 610441.08,
+        "settledValue": 735488.04,
+        "settledN": 203,
+        "settledMean": 3623.0937931034487,
+        "keepPlaced": 0.7663668638037023,
+        "keepSettled": 0.8299809742657405,
+        "outcomes": {
+          "Delivered": 168,
+          "Cancelled": 21,
+          "Returned": 14,
+          "In Transit": 19
+        }
+      },
+      "excess": 15.837837837837837
+    },
+    {
+      "name": "Home & Kitchen",
+      "cod": {
+        "n": 73,
+        "cancel": 19,
+        "returned": 5,
+        "rate": 0.2602739726027397,
+        "returnRate": 0.09259259259259259,
+        "mean": 2016.8124657534247,
+        "median": 1759.95,
+        "sd": 1003.5669379598244,
+        "variance": 1007146.5989660579,
+        "iqr": 1516.58,
+        "cv": 0.49760052310313335,
+        "total": 147227.31,
+        "delivered": 82724.94,
+        "settledValue": 138366.52,
+        "settledN": 68,
+        "settledMean": 2034.8017647058823,
+        "keepPlaced": 0.561885834903864,
+        "keepSettled": 0.5978681837195877,
+        "outcomes": {
+          "Delivered": 44,
+          "Cancelled": 19,
+          "Returned": 5,
+          "In Transit": 5
+        }
+      },
+      "pre": {
+        "n": 202,
+        "cancel": 14,
+        "returned": 19,
+        "rate": 0.06930693069306931,
+        "returnRate": 0.10106382978723404,
+        "mean": 2151.559603960396,
+        "median": 1743.4050000000002,
+        "sd": 1507.3822599664406,
+        "variance": 2272201.277661534,
+        "iqr": 1243.6425000000004,
+        "cv": 0.7005998147538129,
+        "total": 434615.04,
+        "delivered": 348987.97,
+        "settledValue": 415234.25,
+        "settledN": 191,
+        "settledMean": 2174.001308900524,
+        "keepPlaced": 0.8029818066121227,
+        "keepSettled": 0.8404604629796313,
+        "outcomes": {
+          "Delivered": 158,
+          "Returned": 19,
+          "In Transit": 11,
+          "Cancelled": 14
+        }
+      },
+      "excess": 13.940594059405939
+    },
+    {
+      "name": "Fashion",
+      "cod": {
+        "n": 102,
+        "cancel": 16,
+        "returned": 4,
+        "rate": 0.1568627450980392,
+        "returnRate": 0.046511627906976744,
+        "mean": 1093.322843137255,
+        "median": 906.4549999999999,
+        "sd": 598.0952596225168,
+        "variance": 357717.9395829257,
+        "iqr": 580.045,
+        "cv": 0.5470435959302757,
+        "total": 111518.93000000001,
+        "delivered": 85327.56,
+        "settledValue": 104598.93,
+        "settledN": 96,
+        "settledMean": 1089.5721875,
+        "keepPlaced": 0.7651396942205237,
+        "keepSettled": 0.8157593963915309,
+        "outcomes": {
+          "Delivered": 76,
+          "In Transit": 6,
+          "Cancelled": 16,
+          "Returned": 4
+        }
+      },
+      "pre": {
+        "n": 265,
+        "cancel": 20,
+        "returned": 18,
+        "rate": 0.07547169811320754,
+        "returnRate": 0.07346938775510205,
+        "mean": 1029.919962264151,
+        "median": 876.64,
+        "sd": 572.4942615416372,
+        "variance": 327749.67949810455,
+        "iqr": 595.2099999999999,
+        "cv": 0.555862865579457,
+        "total": 272928.79000000004,
+        "delivered": 212541.04,
+        "settledValue": 251270.35,
+        "settledN": 246,
+        "settledMean": 1021.42418699187,
+        "keepPlaced": 0.7787417369930082,
+        "keepSettled": 0.8458659766263708,
+        "outcomes": {
+          "Delivered": 208,
+          "Returned": 18,
+          "In Transit": 19,
+          "Cancelled": 20
+        }
+      },
+      "excess": 8.30188679245283
+    },
+    {
+      "name": "Beauty",
+      "cod": {
+        "n": 54,
+        "cancel": 11,
+        "returned": 1,
+        "rate": 0.2037037037037037,
+        "returnRate": 0.023255813953488372,
+        "mean": 749.7372222222222,
+        "median": 737.135,
+        "sd": 413.3939485614572,
+        "variance": 170894.5567072327,
+        "iqr": 406.0125,
+        "cv": 0.551385120424136,
+        "total": 40485.81,
+        "delivered": 29204.79,
+        "settledValue": 38919.92,
+        "settledN": 52,
+        "settledMean": 748.4599999999999,
+        "keepPlaced": 0.7213586686298237,
+        "keepSettled": 0.7503815526856171,
+        "outcomes": {
+          "Delivered": 40,
+          "Cancelled": 11,
+          "In Transit": 2,
+          "Returned": 1
+        }
+      },
+      "pre": {
+        "n": 120,
+        "cancel": 7,
+        "returned": 13,
+        "rate": 0.058333333333333334,
+        "returnRate": 0.11504424778761062,
+        "mean": 755.0509166666666,
+        "median": 623.3199999999999,
+        "sd": 434.7337681130926,
+        "variance": 188993.44913780814,
+        "iqr": 534.2574999999999,
+        "cv": 0.575767486029045,
+        "total": 90606.10999999999,
+        "delivered": 67585.26,
+        "settledValue": 81386.09,
+        "settledN": 110,
+        "settledMean": 739.8735454545455,
+        "keepPlaced": 0.745923867606721,
+        "keepSettled": 0.8304276566179798,
+        "outcomes": {
+          "Delivered": 90,
+          "Cancelled": 7,
+          "In Transit": 10,
+          "Returned": 13
+        }
+      },
+      "excess": 7.85
+    },
+    {
+      "name": "Grocery",
+      "cod": {
+        "n": 72,
+        "cancel": 9,
+        "returned": 4,
+        "rate": 0.125,
+        "returnRate": 0.06349206349206349,
+        "mean": 646.0798611111111,
+        "median": 572.4449999999999,
+        "sd": 358.7508546134712,
+        "variance": 128702.17568589593,
+        "iqr": 396.8950000000001,
+        "cv": 0.555273235102083,
+        "total": 46517.75,
+        "delivered": 35849.62,
+        "settledValue": 43561.18,
+        "settledN": 66,
+        "settledMean": 660.0178787878788,
+        "keepPlaced": 0.7706653911678876,
+        "keepSettled": 0.8229717376802006,
+        "outcomes": {
+          "Delivered": 53,
+          "Cancelled": 9,
+          "In Transit": 6,
+          "Returned": 4
+        }
+      },
+      "pre": {
+        "n": 123,
+        "cancel": 2,
+        "returned": 11,
+        "rate": 0.016260162601626018,
+        "returnRate": 0.09090909090909091,
+        "mean": 657.8564227642277,
+        "median": 562.91,
+        "sd": 390.15515275111517,
+        "variance": 152221.04321824602,
+        "iqr": 481.36000000000007,
+        "cv": 0.5930703710571581,
+        "total": 80916.34,
+        "delivered": 64458.72,
+        "settledValue": 72572.57,
+        "settledN": 110,
+        "settledMean": 659.7506363636364,
+        "keepPlaced": 0.7966094363635331,
+        "keepSettled": 0.8881967387953877,
+        "outcomes": {
+          "Delivered": 97,
+          "Cancelled": 2,
+          "In Transit": 13,
+          "Returned": 11
+        }
+      },
+      "excess": 7.829268292682927
+    },
+    {
+      "name": "Books",
+      "cod": {
+        "n": 50,
+        "cancel": 13,
+        "returned": 1,
+        "rate": 0.26,
+        "returnRate": 0.02702702702702703,
+        "mean": 447.0284,
+        "median": 372.21500000000003,
+        "sd": 268.59656077972016,
+        "variance": 72144.1124626939,
+        "iqr": 236.33750000000003,
+        "cv": 0.6008489858356207,
+        "total": 22351.42,
+        "delivered": 15373.24,
+        "settledValue": 21940.12,
+        "settledN": 49,
+        "settledMean": 447.75755102040813,
+        "keepPlaced": 0.6877970169233096,
+        "keepSettled": 0.7006907892937687,
+        "outcomes": {
+          "Delivered": 35,
+          "Cancelled": 13,
+          "Returned": 1,
+          "In Transit": 1
+        }
+      },
+      "pre": {
+        "n": 99,
+        "cancel": 12,
+        "returned": 4,
+        "rate": 0.12121212121212122,
+        "returnRate": 0.04597701149425287,
+        "mean": 484.79414141414145,
+        "median": 409.7,
+        "sd": 302.30938772076234,
+        "variance": 91390.96590410222,
+        "iqr": 408.14,
+        "cv": 0.6235830054359316,
+        "total": 47994.62,
+        "delivered": 36222.8,
+        "settledValue": 44446.52,
+        "settledN": 91,
+        "settledMean": 488.42329670329667,
+        "keepPlaced": 0.7547262589015186,
+        "keepSettled": 0.8149749406702709,
+        "outcomes": {
+          "Returned": 4,
+          "Delivered": 75,
+          "Cancelled": 12,
+          "In Transit": 8
+        }
+      },
+      "excess": 6.9393939393939394
+    }
+  ],
+  "mergeP": 0.9433693433909094,
+  "skew": 1.1241451936874534,
+  "corr": [
+    [
+      1.0,
+      0.18793978165119704,
+      0.014944912847841075
+    ],
+    [
+      0.18793978165119704,
+      1.0,
+      0.043979406886939486
+    ],
+    [
+      0.014944912847841075,
+      0.04397940688693948,
+      1.0
+    ]
+  ],
+  "threshold": 3447.186715334181,
+  "highRate": 0.3,
+  "lowRate": 0.1882640586797066,
+  "highN": 60,
+  "highC": 18,
+  "oneT": 4.399699708857071,
+  "oneP": 1.1605840572860972e-05,
+  "welchT": 0.5667974462321712,
+  "welchP": 0.2854996392359573,
+  "welchDF": 862.4638278237542,
+  "welchSE": 94.34469184906989,
+  "welchCritical": 1.6466223007227871,
+  "z": 7.278876444249443,
+  "zP": 1.6830589600632035e-13,
+  "gapCI": [
+    0.08912592326117677,
+    0.1685616676053304
+  ],
+  "chi": 58.10533252754468,
+  "chiP": 1.4925388375226107e-12,
+  "chiDF": 3,
+  "expected": [
+    [
+      352.06266666666664,
+      53.466,
+      30.641333333333332,
+      32.83
+    ],
+    [
+      773.9373333333333,
+      117.534,
+      67.35866666666666,
+      72.17
+    ]
+  ],
+  "table": [
+    [
+      330,
+      95,
+      19,
+      25
+    ],
+    [
+      796,
+      76,
+      79,
+      80
+    ]
+  ],
+  "statuses": [
+    "Delivered",
+    "Cancelled",
+    "Returned",
+    "In Transit"
+  ],
+  "crudeOR": 3.1918449197860963,
+  "crudeCI": [
+    2.307422287407872,
+    4.415262020984134
+  ],
+  "mhOR": 3.2560393032004935,
+  "mhCI": [
+    2.3453612567332773,
+    4.520323644619678
+  ],
+  "logOR": 3.237656698791637,
+  "logCI": [
+    2.3319535148987107,
+    4.495124294827835
+  ],
+  "logCoef": 1.1748498270255192,
+  "homogeneityP": 0.5132091458754371,
+  "binCOD": 0.9283599184302316,
+  "binPre": 0.0065430878071867414,
+  "cramers": 0.1968168904126281,
+  "breakEven": 212.08799117374582,
+  "breakEvenPlaced": 166.1131569906192
+}

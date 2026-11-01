@@ -1,0 +1,217 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cash or click? The story</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%;margin:0;background:#000;font-family:'Inter Tight',Helvetica,Arial,sans-serif;overflow:hidden}
+.slide{position:absolute;inset:0;padding:4vh 5vw 74px;display:none;flex-direction:column;gap:12px;overflow:auto;background:#000;color:#fff;--ink:#fff;--mu:#B9B09A;--cod:#F08A4B;--pre:#3FB5A3;--red:#FF7A66;--ln:#444;--card:#111}
+.slide.lt{background:#F1EAD6;color:#1D1B18;--ink:#1D1B18;--mu:#6B655A;--cod:#D9611A;--pre:#1F7A6E;--red:#C8321F;--ln:#CFC5AB;--card:#EAE1C8}
+.slide.on{display:flex;animation:sin .6s both}
+@keyframes sin{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:none}}
+.tag{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--red);margin:0}
+h1{font-size:clamp(44px,8vw,110px);line-height:1;margin:0;font-weight:800}
+h2{font-size:clamp(26px,4vw,50px);line-height:1.08;margin:0;font-weight:800}
+p{margin:0;color:var(--mu);font-size:clamp(15px,1.6vw,21px);line-height:1.35}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:12px 5vw calc(12px + env(safe-area-inset-bottom,0px));mix-blend-mode:difference;color:#fff;z-index:5}
+.nav button{background:none;border:1px solid #fff;color:#fff;font:inherit;font-weight:700;border-radius:10px;padding:9px 18px;cursor:pointer}
+.nav span{font-family:'JetBrains Mono',monospace;font-size:13px}
+#tip{position:fixed;display:none;z-index:9;background:#fff;color:#111;border-radius:8px;padding:8px 12px;font-size:14px;pointer-events:none;max-width:240px;box-shadow:0 4px 18px #0006}
+.grid2{display:grid;grid-template-columns:minmax(260px,2fr) 3fr;gap:24px;align-items:center}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+canvas,svg{max-width:100%;height:auto;display:block}
+.bw{display:flex;flex-direction:column;gap:4px;margin:10px 0}
+.bw i{display:block;height:26px;width:0;border-radius:5px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.bw b{font-size:15px;font-weight:700}
+.hint{color:#fff;animation:pl 1.6s infinite;font-family:'JetBrains Mono',monospace;font-size:14px}
+@keyframes pl{50%{opacity:.25}}
+.pin{animation:drop .7s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes drop{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:none}}
+.lane{display:flex;align-items:center;gap:14px;overflow:hidden;max-height:60px;transition:max-height .8s,opacity .8s}
+.lane span{width:130px;font-weight:700;font-size:16px}
+.lane i{display:block;height:30px;border-radius:5px;transition:width 1s}
+.m .pm{max-height:0;opacity:0}.pp{max-height:0;opacity:0}.m .pp{max-height:60px;opacity:1}
+.bar{transform-box:fill-box;transform-origin:bottom;animation:grow .7s both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+button.b{background:var(--ink);color:#000;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;width:fit-content}
+.lt button.b{color:#F1EAD6}
+.right{border-top:2px solid var(--ln);padding-top:10px;color:var(--ink)}.right b{color:var(--red)}
+input[type=range]{width:min(640px,92%)}
+.big{font-size:clamp(34px,5vw,60px);font-weight:800;color:var(--red)}
+.tabs{display:flex;gap:10px;flex-wrap:wrap}.tb{background:none;border:2px solid var(--ln);color:var(--ink);border-radius:999px;padding:8px 16px;font:inherit;font-weight:700;cursor:pointer}.tb.on{background:var(--ink);color:#F1EAD6;border-color:var(--ink)}.fm{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mu)}#hc{width:100%;max-width:960px;max-height:42vh}
+.rw{display:flex;align-items:center;gap:12px;margin:7px 0;max-width:900px}.rw span{width:210px;font-weight:700;font-size:15px}.rw i{display:block;height:28px;width:0;border-radius:5px;transition:width 1.3s cubic-bezier(.2,.8,.2,1)}.rw b{font-size:16px}
+.fr{display:grid;grid-template-columns:1fr 2.4fr 1.2fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln);opacity:0;transform:translateY(16px);transition:all .6s}.fr.in{opacity:1;transform:none}
+.be label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:14px}
+</style></head><body>
+
+<section class="slide" id="s-globe" style="align-items:center;justify-content:center;text-align:center">
+<canvas id="gl" width="560" height="560" style="max-height:62vh;width:auto"></canvas>
+<h1>Cash or click?</h1><p>Does the way customers pay change cancellations and order value?</p><span class="hint">PRESS NEXT ▸ TO ENTER INDIA</span></section>
+
+<section class="slide" id="s-cart"><p class="tag">THE STORY · INDIA</p><h2>All the revenue is not added.</h2>
+<div class="grid2"><div>
+<div class="bw" data-tip="<b>Combined</b><br>171 cancelled of 1,500"><b>Combined · 11.4%</b><i class="bar2" style="background:#fff" data-w="45.6%"></i></div>
+<div class="bw" data-tip="<b>Prepaid</b><br>76 cancelled of 1,031"><b>Prepaid · 7.4%</b><i class="bar2" style="background:var(--pre)" data-w="29.6%"></i></div>
+<div class="bw" data-tip="<b>COD</b><br>95 cancelled of 469"><b>COD · 20.3%</b><i class="bar2" style="background:var(--cod)" data-w="81.2%"></i></div>
+<p>Cancellation rate by payment mode</p></div>
+<div style="position:relative"><svg id="mp2" viewBox="0 0 400 440" style="position:absolute;inset:0;width:100%;height:100%;opacity:.18"><path class="ind" fill="none" stroke="#fff" stroke-width="2"/></svg><canvas id="cv" width="640" height="300" style="position:relative"></canvas></div></div>
+<p id="cs" style="color:#fff;font-family:'JetBrains Mono',monospace"></p></section>
+
+<section class="slide" id="s-data"><p class="tag">THE DATA</p><h2>1,500 orders. 12 cities. Jan to Sep 2025.</h2>
+<div class="grid2"><svg id="mp3" viewBox="0 0 400 440" style="max-height:62vh"><path class="ind" fill="none" stroke="#fff" stroke-width="2"/><g id="pins"></g></svg>
+<div><div class="big" id="tot">0</div><p>orders in the course dataset. Hover a pin for the city count. About 125 orders per city, so no single city drives the result.</p></div></div></section>
+
+<section class="slide" id="s-lanes"><p class="tag">STUDY DESIGN</p><h2>Six payment methods, two lanes.</h2>
+<div id="ln" style="display:flex;flex-direction:column;gap:10px;max-width:900px"></div>
+<button class="b" id="mg">Merge Prepaid ▸</button><p id="lt2">Hover a bar for its cancellation rate. The five Prepaid methods cancel at similar rates (test p = 0.94), so we can merge them.</p></section>
+
+<section class="slide lt" id="s-hist"><p class="tag">CONCEPT 01 · FREQUENCY DISTRIBUTION</p><h2>What does the <i>whole order book</i> look like?</h2>
+<p>All 1,500 orders poured into one picture. One dot is one order.</p>
+<div class="tabs"><button class="tb on" data-s="0"><b>01</b> Histogram</button><button class="tb" data-s="1"><b>02</b> Ogive</button><button class="tb" data-s="2"><b>03</b> Right call?</button></div>
+<canvas id="hc" width="960" height="360"></canvas>
+<div><h3 id="st" style="margin:0;font-size:clamp(18px,2.2vw,28px)"></h3><p id="sd" style="color:var(--ink)"></p><p id="sf" class="fm"></p></div>
+<div id="qz" style="display:none"><div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap"><input type="range" id="zr" min="100" max="13000" step="50" value="1500"><div class="big" id="zb"></div></div><p id="zt" style="color:var(--ink)"></p>
+<p class="right"><b>Right call?</b> z = (order − x̄) ÷ s. A COD order above ₹3,447 (z ≥ 1 for COD) cancels 30.0% of the time, against 18.8% below it.</p></div>
+<p style="font-size:13px">Classes include the lower limit: an order of exactly ₹1,000 counts in ₹1,000–1,500. The last class is ₹5,000 and above.</p></section>
+
+<div class="nav"><button id="pv">◂ Back</button><span id="ct"></span><button id="nx">Next ▸</button></div><div id="tip"></div>
+
+<script>
+const N=['globe','cart','data','lanes','hist','tend','disp','corr','bayes','bin','clt','welch','ztest','chi','twist','conf','cat','find','rec','end'],init={};let cur=0,tk=()=>{};
+const $=s=>document.querySelector(s),fmt=n=>Math.round(n).toLocaleString('en-IN');
+const cu=(el,a,b,f,d=1400)=>{const t0=performance.now();(function s(t){const p=Math.min((t-t0)/d,1);el.textContent=f(a+(b-a)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s)})(t0)};
+const tip=$('#tip');document.addEventListener('mousemove',e=>{const t=e.target.closest('[data-tip]');if(t){tip.style.display='block';tip.innerHTML=t.dataset.tip;tip.style.left=Math.min(e.clientX+14,innerWidth-250)+'px';tip.style.top=e.clientY+14+'px'}else tip.style.display='none'});
+const IN=[[68.2,23.7],[70,21],[72.8,19],[73.5,16],[74.8,12.5],[76.3,9.5],[77.5,8.1],[79.3,10],[80.3,13],[80.3,15.8],[82,17],[84.8,19.3],[87,21.5],[88.4,22],[89,26],[92,26.5],[96,28],[92,24],[90,25.3],[88,27],[84,27.5],[80.5,29],[78,31],[75,33],[74,34.5],[75,32.5],[72,31],[70,28],[71,25]];
+const PX=(lo,la)=>[(lo-67)*12.9,(36-la)*14.6];
+const dpath='M'+IN.map(p=>PX(p[0],p[1]).map(v=>v.toFixed(1)).join(',')).join('L')+'Z';
+document.querySelectorAll('.ind').forEach(p=>{p.setAttribute('d',dpath);p.style.strokeDasharray=2000;p.style.animation='dr 3s ease forwards'});
+document.head.insertAdjacentHTML('beforeend','<style>@keyframes dr{from{stroke-dashoffset:2000}to{stroke-dashoffset:0}}</style>');
+function go(i){cur=(i+N.length)%N.length;N.forEach((n,j)=>$('#s-'+n).classList.toggle('on',j===cur));history.replaceState(null,'','#'+N[cur]);$('#ct').textContent=(cur+1)+' / '+N.length;tk=init[N[cur]]()||(()=>{})}
+$('#nx').onclick=()=>go(cur+1);$('#pv').onclick=()=>go(cur-1);addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+(function lp(){tk();requestAnimationFrame(lp)})();
+/* 1 globe */
+init.globe=()=>{const x=$('#gl').getContext('2d'),D=Math.PI/180,R=190,C=280,S=Array.from({length:60},()=>({x:Math.random()*560,y:Math.random()*560,p:Math.random()*6}));let l=0;
+ const P=(la,lo)=>{const a=(lo-l)*D,f=la*D,b=20*D,y1=Math.sin(f),z1=Math.cos(f)*Math.cos(a);return[Math.cos(f)*Math.sin(a),y1*Math.cos(b)-z1*Math.sin(b),y1*Math.sin(b)+z1*Math.cos(b)]};
+ const L=g=>{x.beginPath();let on=0;for(let i=0;i<=72;i++){const p=g(i*5);if(p[2]>0){const X=C+R*p[0],Y=C-R*p[1];on?x.lineTo(X,Y):x.moveTo(X,Y);on=1}else on=0}x.stroke()};
+ return()=>{l+=.4;x.clearRect(0,0,560,560);S.forEach(s=>{x.globalAlpha=.2+.6*Math.abs(Math.sin(l/6+s.p));x.fillStyle='#fff';x.fillRect(s.x,s.y,2,2)});
+ x.strokeStyle='#fff';x.lineWidth=2.5;x.globalAlpha=1;x.beginPath();x.arc(C,C,R,0,7);x.stroke();x.lineWidth=1;x.globalAlpha=.5;
+ for(let la=-60;la<=60;la+=30)L(u=>P(la,u));for(let m=0;m<360;m+=30)L(u=>P(-90+u/2,m));
+ x.globalAlpha=1;x.lineWidth=2.5;x.beginPath();let on=0;IN.concat([IN[0]]).forEach(q=>{const p=P(q[1],q[0]);if(p[2]>0){const X=C+R*p[0],Y=C-R*p[1];on?x.lineTo(X,Y):x.moveTo(X,Y);on=1}else on=0});x.stroke()}};
+/* 2 cart */
+init.cart=()=>{const x=$('#cv').getContext('2d'),W=640,gy=250,t0=performance.now(),cs=$('#cs');let B=[],nb=0,bd=0,last=0,lc=-1;
+ document.querySelectorAll('.bar2').forEach(b=>{b.style.width=0;setTimeout(()=>b.style.width=b.dataset.w,150)});
+ return()=>{const t=(performance.now()-t0)/1000,cyc=Math.floor(t/9),ph=t%9,cx=20+ph/9*470;if(cyc!==lc){lc=cyc;B=[];nb=0;bd=0;last=t}
+ x.clearRect(0,0,W,300);x.strokeStyle='#fff';x.lineWidth=2;x.beginPath();x.moveTo(0,gy+26);x.lineTo(W,gy+26);x.stroke();
+ x.beginPath();x.moveTo(cx,gy-70);x.lineTo(cx+110,gy-70);x.lineTo(cx+95,gy);x.lineTo(cx+15,gy);x.closePath();x.moveTo(cx,gy-70);x.lineTo(cx-18,gy-95);x.lineTo(cx-34,gy-95);x.stroke();
+ [28,88].forEach(o=>{x.beginPath();x.arc(cx+o,gy+14,10,0,7);x.stroke()});
+ if(ph<7.6&&t-last>.4){last=t;B.push({dx:20+Math.random()*70,y:-20,s:0,bad:Math.random()<.114,cod:Math.random()<.313,vx:0,vy:0,a:1})}
+ B.forEach(b=>{if(b.s==0){b.y+=7;const ly=b.bad?gy-86:gy-18-Math.floor(nb/5)*16;if(b.y>=ly){b.y=ly;if(b.bad){b.s=2;b.vx=3;b.vy=-7;bd++}else{b.s=1;b.dx=14+(nb%5)*17;nb++}}}else if(b.s==2){b.dx+=b.vx;b.y+=b.vy;b.vy+=.6;b.a-=.012}
+  x.globalAlpha=Math.max(b.a,0);x.fillStyle=b.bad&&b.s==2?'#FF7A66':b.cod?'#F08A4B':'#3FB5A3';x.fillRect(cx+b.dx,b.y,14,14);x.strokeRect(cx+b.dx,b.y,14,14)});x.globalAlpha=1;
+ cs.textContent='Boxes in cart: '+nb+'  ·  Revenue added ₹'+fmt(nb*1688)+'  ·  Lost to cancellations ₹'+fmt(bd*1892)}};
+/* 3 data map */
+const CY=[['Bengaluru',137,12.97,77.59],['Delhi',137,28.61,77.21],['Ahmedabad',133,23.02,72.57],['Pune',131,18.52,73.86],['Kolkata',130,22.57,88.36],['Chennai',127,13.08,80.27],['Jaipur',125,26.91,75.79],['Kochi',121,9.93,76.27],['Hyderabad',121,17.39,78.49],['Lucknow',114,26.85,80.95],['Coimbatore',113,11.02,76.96],['Mumbai',111,19.08,72.88]];
+$('#pins').innerHTML=CY.map((c,i)=>{const p=PX(c[3],c[2]);return `<circle class="pin" cx="${p[0]}" cy="${p[1]}" r="${5+(c[1]-110)/27*3}" fill="#F08A4B" stroke="#fff" stroke-width="1.5" style="animation-delay:${1+i*.18}s" data-tip="<b>${c[0]}</b><br>${c[1]} orders (${(c[1]/15).toFixed(1)}%)"/>`}).join('');
+init.data=()=>{cu($('#tot'),0,1500,fmt,2600)};
+/* 4 lanes */
+const M=[['COD',469,95,'cod'],['UPI',547,40,'pre'],['Credit Card',200,17,'pre'],['Debit Card',152,11,'pre'],['Net Banking',77,5,'pre'],['Wallet',55,3,'pre']];
+$('#ln').innerHTML=M.map(m=>`<div class="lane ${m[3]=='pre'?'pm':''}" data-tip="<b>${m[0]}</b><br>${m[2]} cancelled of ${m[1]} = ${(m[2]/m[1]*100).toFixed(1)}%"><span>${m[0]}</span><i style="width:0;background:var(--${m[3]})" data-w="${m[1]/6}%"></i><b>${m[1]}</b></div>`).join('')+`<div class="lane pp" data-tip="<b>Prepaid</b><br>76 cancelled of 1,031 = 7.4%"><span>Prepaid</span><i style="width:0;background:var(--pre)" data-w="${1031/12}%"></i><b>1,031</b></div>`;
+init.lanes=()=>{$('#ln').classList.remove('m');$('#mg').textContent='Merge Prepaid ▸';document.querySelectorAll('#ln i').forEach(b=>{b.style.width=0;setTimeout(()=>b.style.width=b.dataset.w,200)});$('#mg').onclick=()=>{const m=$('#ln').classList.toggle('m');$('#mg').textContent=m?'Split again ↺':'Merge Prepaid ▸'}};
+/* 5 histogram */
+const F=[286,421,223,156,100,81,61,34,37,20,81],CUM=[0,19.1,47.1,62.0,72.4,79.1,84.5,88.5,90.8,93.3,94.6,100];
+const pct=v=>{if(v>=5000)return 94.6+(Math.min(v,13454)-5000)/8454*5.4;const i=Math.floor(v/500);return CUM[i]+(v-i*500)/500*(CUM[i+1]-CUM[i])};
+const xs=v=>v<5000?40+v/500*80:840+(Math.min(v,13454)-5000)/8454*80;
+const cv=k=>getComputedStyle($('#s-hist')).getPropertyValue(k).trim();
+const ST=[['How many orders in each ₹500 class','One dot is one order. The tallest column is ₹500–1,000, with 421 orders.','Formula  relative frequency = f ÷ n   ·   class width ₹500   ·   n = 1,500'],['How many orders cost less than a value','The running total of the columns, from 0% to 100%.','Formula  cumulative % = Σ f ÷ n, at each class’s upper limit'],['Where an order sits among all orders','Drag the slider to try an order value.','Read  order → up to the line → across to %      Next  that 50% point is the median']];
+let HS=0,HT=0,DT=[];
+function dots(){DT=[];F.forEach((f,i)=>{for(let k=0;k<f;k++){const tx=46+i*80+(k%11)*6.2+3;DT.push({i,tx,ty:320-(Math.floor(k/11)+1)*6.2+3,y:-10,vy:0,d:i*.12+Math.random()*1.4,l:0})}})}
+init.hist=()=>{const c=$('#hc'),x=c.getContext('2d'),r=$('#zr');
+ const upd=()=>{const v=+r.value,z=(v-1688.49)/1659.29;$('#zb').textContent='z = '+(z<0?'−':'+')+Math.abs(z).toFixed(2);$('#zt').textContent='A ₹'+fmt(v)+' order is larger than about '+Math.round(pct(v))+'% of all orders ('+pct(v).toFixed(1)+'%). Half of all orders are below ₹1,067. Mean ₹1,688, SD ₹1,659.'};
+ const set=s=>{HS=s;HT=performance.now();document.querySelectorAll('.tb').forEach((b,j)=>b.classList.toggle('on',j===s));$('#st').textContent=ST[s][0];$('#sd').textContent=ST[s][1];$('#sf').textContent=ST[s][2];$('#qz').style.display=s==2?'block':'none';if(s==0)dots();upd()};
+ document.querySelectorAll('.tb').forEach(b=>b.onclick=()=>set(+b.dataset.s));r.oninput=upd;
+ c.onmousemove=e=>{const rc=c.getBoundingClientRect(),px=(e.clientX-rc.left)/rc.width*960,i=Math.floor((px-40)/80);
+  if(HS==2&&Math.abs(px-xs(1688.49))<8)c.dataset.tip='<b>Mean ₹1,688</b><br>SD ₹1,659 · variance ₹² 2.75M<br>CV 0.98 · skew 2.24';
+  else if(HS==2&&Math.abs(px-xs(1066.74))<8)c.dataset.tip='<b>Median ₹1,067</b><br>Mode class ₹500–1,000<br>Pearson skew 1.12';
+  else if(i>=0&&i<11)c.dataset.tip='<b>₹'+fmt(i*500)+'–'+(i==10?'5,000+':fmt(i*500+500))+'</b><br>'+F[i]+' orders · rel. freq '+(F[i]/15).toFixed(1)+'%<br>Cumulative '+CUM[i+1]+'%';else delete c.dataset.tip};
+ set(0);
+ return()=>{const t=(performance.now()-HT)/1000;x.clearRect(0,0,960,360);
+  x.strokeStyle=cv('--ln');x.lineWidth=1;x.beginPath();x.moveTo(40,320);x.lineTo(930,320);x.stroke();
+  x.fillStyle=cv('--mu');x.font='12px JetBrains Mono';for(let i=0;i<=10;i++)x.fillText(i<10?'₹'+fmt(i*500):'₹5,000+',40+i*80-8,340);
+  DT.forEach(d=>{if(t<d.d)return;if(!d.l){d.vy+=.55;d.y+=d.vy;if(d.y>=d.ty){d.y=d.ty;d.l=1}}x.globalAlpha=HS==0?1:.22;x.fillStyle=HS==0&&d.i==1?cv('--cod'):cv('--pre');x.beginPath();x.arc(d.tx,d.y,2.6,0,7);x.fill()});x.globalAlpha=1;
+  if(HS==0&&t>3.6){x.fillStyle=cv('--ink');x.font='700 13px Inter Tight';F.forEach((f,i)=>x.fillText(f,46+i*80+(f>99?22:26),320-Math.ceil(f/11)*6.2-6));x.fillStyle=cv('--cod');x.font='700 15px Inter Tight';x.fillText('tallest column: ₹500–1,000 · 421 orders',420,70)}
+  if(HS>0){x.fillStyle=cv('--mu');x.font='12px JetBrains Mono';[0,50,100].forEach(p=>x.fillText(p+'%',2,324-p*2.7));
+   const op=HS==1?Math.min(t/1.8,1):1,pts=[[40,320]].concat(CUM.slice(1).map((q,i)=>[40+(i+1)*80,320-q*2.7])),ns=11*op;
+   x.strokeStyle=cv('--red');x.lineWidth=3;x.beginPath();x.moveTo(40,320);for(let i=1;i<=11;i++){if(i<=Math.floor(ns))x.lineTo(pts[i][0],pts[i][1]);else if(i-1<ns){const f=ns-(i-1);x.lineTo(pts[i-1][0]+(pts[i][0]-pts[i-1][0])*f,pts[i-1][1]+(pts[i][1]-pts[i-1][1])*f)}}x.stroke();
+   if(HS==1){x.fillStyle=cv('--red');x.font='12px JetBrains Mono';pts.forEach((p,i)=>{if(i>0&&i<=ns){x.beginPath();x.arc(p[0],p[1],3.5,0,7);x.fill();x.fillText(CUM[i]+'%',p[0]-14,p[1]-9)}})}}
+  if(HS==2){const v=+$('#zr').value,px=xs(v),py=320-pct(v)*2.7,mx=xs(1688.49),dx=xs(1066.74);
+   x.setLineDash([5,5]);x.strokeStyle=cv('--ink');x.lineWidth=1;x.beginPath();x.moveTo(40,185);x.lineTo(dx,185);x.lineTo(dx,320);x.stroke();x.strokeStyle=cv('--cod');x.lineWidth=2;x.beginPath();x.moveTo(mx,320);x.lineTo(mx,40);x.stroke();x.setLineDash([]);
+   x.fillStyle=cv('--ink');x.font='700 12px Inter Tight';x.fillText('median ₹1,067 (50%)',dx-40,178);x.fillStyle=cv('--cod');x.fillText('mean ₹1,688',mx+6,52);
+   x.strokeStyle=cv('--red');x.lineWidth=3;x.beginPath();x.moveTo(px,320);x.lineTo(px,py);x.lineTo(40,py);x.stroke();x.fillStyle=cv('--red');x.beginPath();x.arc(px,py,6,0,7);x.fill();x.font='700 14px Inter Tight';x.fillText(pct(v).toFixed(1)+'%',46,py-8)}}};
+/* slides 6-20 */
+const ease=p=>1-Math.pow(1-Math.min(p,1),3);
+const Q=[
+{id:'tend',tag:'CONCEPT 02 · CENTRAL TENDENCY & SKEWNESS',h:'Which “typical order” should you trust?',p:'The mean, median and mode disagree because a few large baskets pull the mean up. Modes: UPI (payment), Fashion (category), quantity 1.',v:{t:'nl'},fm:'x̄ = Σx ÷ n = 2,532,741.75 ÷ 1,500 = ₹1,688.49 · median = ₹1,066.74 · Pearson skew = 3(x̄ − median) ÷ s = 1.12',rc:'Quote the median for a typical order; the mean is inflated by a few big baskets.'},
+{id:'disp',tag:'CONCEPT 03 · VARIANCE, SD & CV',h:'How far can an order swing?',p:'COD and Prepaid orders are spread almost identically. Hover a bar for variance, IQR and CV.',v:{t:'bars',i:[['COD standard deviation',1722,2000,'cod','Variance ₹² 2,965,069<br>IQR ₹1,723 · CV 1.00','₹1,722'],['Prepaid standard deviation',1631,2000,'pre','Variance ₹² 2,658,756<br>IQR ₹1,524 · CV 0.98','₹1,631']]},fm:'s = √[Σ(x − x̄)² ÷ (n − 1)] = √2,965,069 = ₹1,721.94 (COD) · CV = s ÷ x̄',rc:'Spread is the same in both groups, so basket size cannot explain the cancellation gap.'},
+{id:'corr',tag:'CONCEPT 05 · COVARIANCE & CORRELATION',h:'Is payment mode tied to cancelling?',p:'Covariance gives the sign, correlation gives the strength. Hover for covariance, r² and p-values.',v:{t:'bars',i:[['COD × Cancelled',.188,.25,'red','Covariance 0.0277<br>r² = 3.5% · p < 0.001','r = 0.19'],['Order value × Cancelled',.044,.25,'cod','Covariance ₹23.2 · p = 0.089','r = 0.04'],['COD × Order value',.015,.25,'pre','Covariance ₹11.5 · p = 0.563','r = 0.01']]},fm:'r = Cov ÷ (sX · sY) = 0.0277 ÷ (0.4637 × 0.3179) = 0.188 · r² = 3.5% · Cramér’s V = φ = 0.188',rc:'Payment mode explains only 3.5% of the variation in cancelling, yet the rate gap is large because cancellation is rare.'},
+{id:'bayes',tag:'CONCEPT 06 · CONDITIONAL PROBABILITY & BAYES',h:'31% of orders. 56% of cancellations.',p:'Each group is its own whole for conditional probability. Bayes turns it around: given a cancellation, how likely is it COD?',v:{t:'bars',i:[['Share of orders',31.3,100,'pre','COD = 469 of 1,500','31.3%'],['Share of cancellations',55.6,100,'cod','P(COD | Cancelled) = 95 ÷ 171','55.6%'],['P(Cancel | COD)',20.3,100,'cod','95 ÷ 469 · relative risk 2.75','20.3%'],['P(Cancel | Prepaid)',7.4,100,'pre','76 ÷ 1,031 · odds ratio 3.19','7.4%']]},fm:'P(COD | C) = P(C | COD) · P(COD) ÷ P(C) = 0.2026 × 0.3127 ÷ 0.114 = 0.556',rc:'COD is where cancellations concentrate, so that is where an intervention pays.'},
+{id:'bin',tag:'CONCEPT 07 · BINOMIAL DISTRIBUTION',h:'Ship 100 parcels. How many get cancelled?',p:'Drag k to read P(X ≥ k) for COD and Prepaid. Daily cancellations also fit a Poisson (λ = 0.626, fit p = 0.45).',v:{t:'bin'},fm:'P(X = k) = ¹⁰⁰Cₖ · pᵏ · (1 − p)¹⁰⁰⁻ᵏ · COD p = 0.2026 · Prepaid p = 0.0737',rc:'Expect about 20 cancellations per 100 COD orders against about 7 for Prepaid.'},
+{id:'clt',tag:'CONCEPT 08 · SAMPLING DISTRIBUTION, CLT & ONE-SAMPLE t',h:'Skewed orders, bell-shaped averages',p:'Drag n: averages of n random orders form a bell. One-sample t against a ₹1,500 benchmark (a placeholder): x̄ = ₹1,688, SE = 42.8, t = 4.40, p < 0.001.',v:{t:'clt'},fm:'t = (x̄ − μ₀) ÷ (s ÷ √n) = (1,688.49 − 1,500) ÷ (1,659.29 ÷ √1,500) = 4.40 · df = 1,499',rc:'Averages are bell-shaped even though orders are skewed, so t-tests are valid. Replace ₹1,500 with your brief’s benchmark.'},
+{id:'welch',tag:'CONCEPT 09 · TWO-SAMPLE t (WELCH, ONE-TAILED)',h:'Do COD buyers order bigger?',p:'H₀: μCOD = μPrepaid, H₁: μCOD > μPrepaid, α = 0.05. COD ₹1,725 vs Prepaid ₹1,672, df = 862, p = 0.285, 95% CI of the gap −₹132 to +₹239.',v:{t:'curve',lo:-3,hi:4,s:.57,cr:1.647,n:'t'},fm:'t = (x̄₁ − x̄₂) ÷ √(s₁²/n₁ + s₂²/n₂) = 53.47 ÷ 94.35 = 0.57',rc:'Fail to reject: basket size is no reason to restrict COD.'},
+{id:'ztest',tag:'TEST · TWO-PROPORTION z (ONE-TAILED)',h:'Does COD really cancel more?',p:'H₀: pCOD ≤ pPrepaid, H₁: pCOD > pPrepaid, α = 0.05. 20.3% vs 7.4%, gap 12.9 pp (95% CI 8.9 to 16.9), Cohen’s h = 0.38.',v:{t:'curve',lo:-3,hi:8,s:7.28,cr:1.645,n:'z'},fm:'z = (p̂₁ − p̂₂) ÷ √[p̄q̄(1/n₁ + 1/n₂)] = 0.1288 ÷ 0.0177 = 7.28 · p < 0.001 · χ² = z² = 52.98',rc:'Reject H₀: COD’s higher cancellation rate is not luck.'},
+{id:'chi',tag:'CONCEPT 10 · CHI-SQUARE & CRAMÉR’S V',h:'Is order outcome linked to payment mode?',p:'Payment mode × order outcome (2 × 4): χ² = 58.1, df = 3, p < 0.001, Cramér’s V = 0.197. Smallest expected count 30.6, so the test is valid.',v:{t:'bars',i:[['Delivered · COD',70.4,100,'cod','','70.4%'],['Delivered · Prepaid',77.2,100,'pre','','77.2%'],['Cancelled · COD',20.3,100,'cod','','20.3%'],['Cancelled · Prepaid',7.4,100,'pre','','7.4%'],['Returned · COD',4.1,100,'cod','','4.1%'],['Returned · Prepaid',7.7,100,'pre','','7.7%']]},fm:'χ² = Σ (O − E)² ÷ E = 58.1 · df = (2 − 1)(4 − 1) = 3 · V = √[χ² ÷ (N · min(r − 1, c − 1))] = 0.197',rc:'Outcome and payment mode are linked, and it is not only cancellations: Prepaid returns more.'},
+{id:'twist',tag:'THE TWIST · IMPROVED PROBLEM STATEMENT',h:'Cancellations are not the whole story',p:'Among non-cancelled orders Prepaid returns more (z = 2.00, two-tailed p = 0.045, borderline). Revenue kept per ₹100 ordered: COD ₹71.5, Prepaid ₹83.7 (gap CI ₹5.4 to ₹19.1).',v:{t:'bars',i:[['Return rate · COD',5.1,10,'cod','19 of 374','5.1%'],['Return rate · Prepaid',8.3,10,'pre','79 of 955','8.3%'],['Revenue kept · COD',71.5,100,'cod','Delivered ÷ settled order value','₹71.5'],['Revenue kept · Prepaid',83.7,100,'pre','Delivered ÷ settled order value','₹83.7']]},fm:'Revenue kept = delivered value ÷ (delivered + returned + cancelled value), In Transit excluded · gap CI by bootstrap',rc:'Even after returns, Prepaid keeps about ₹12 more of every ₹100 ordered.'},
+{id:'conf',tag:'ROBUSTNESS',h:'Is it just category mix?',p:'Three ways to estimate the odds of cancelling on COD vs Prepaid. If category mix drove the result, the adjusted numbers would drop.',v:{t:'bars',i:[['Crude odds ratio',3.19,4,'cod','95% CI 2.31–4.42','3.19'],['Mantel-Haenszel (by category)',3.26,4,'pre','95% CI 2.35–4.52 · homogeneity p = 0.51','3.26'],['Logistic (category, value, quantity)',3.24,4,'pre','95% CI 2.33–4.49','3.24']]},fm:'MH OR = Σ(aᵢdᵢ/nᵢ) ÷ Σ(bᵢcᵢ/nᵢ) = 59.95 ÷ 18.41 = 3.26 · logistic OR = e^1.174 = 3.24',rc:'The effect barely moves, so it is not just category mix.'},
+{id:'cat',tag:'WHERE IT HURTS',h:'Two categories drive half the excess',p:'Excess cancellations = COD orders × (COD rate − Prepaid rate) per category. Total 60.4. Hover for the rates.',v:{t:'bars',i:[['Electronics',15.8,16,'red','COD 22.9% vs Prepaid 9.5%<br>118 COD orders','15.8'],['Home & Kitchen',13.9,16,'red','COD 26.0% vs Prepaid 6.9%<br>73 COD orders','13.9'],['Fashion',8.3,16,'ln','COD 15.7% vs Prepaid 7.5%','8.3'],['Beauty',7.8,16,'ln','COD 20.4% vs Prepaid 5.8%','7.8'],['Grocery',7.8,16,'ln','COD 12.5% vs Prepaid 1.6%','7.8'],['Books',6.9,16,'ln','COD 26.0% vs Prepaid 12.1%','6.9']]},fm:'Electronics: 118 × (0.2288 − 0.0946) = 15.8 · Electronics + Home & Kitchen = 29.8 ÷ 60.4 = 49%',rc:'Start confirmation in Electronics and Home & Kitchen: 41% of COD orders, 49% of the excess.'},
+{id:'find',tag:'FINDINGS',h:'So, which payment mode keeps your revenue?',p:'',v:{t:'rows',i:[['z = 7.28','COD cancels 2.75× as often (20.3% vs 7.4%)','Operations'],['t = 0.57, p = 0.571','Order value is the same, so COD is not about big baskets','Category managers'],['₹71.5 vs ₹83.7','Prepaid keeps more revenue per ₹100 despite more returns','Finance'],['OR ≈ 3.2','Holds after controlling for category, value and quantity','Analytics']]},fm:'',rc:'Cancellation is the lever, and it sits in COD orders in Electronics and Home & Kitchen.'},
+{id:'rec',tag:'RECOMMENDATIONS',h:'Confirm. Shift. Test.',p:'Confirm: OTP or call on COD in Electronics and Home & Kitchen first. Shift: prepaid cashback or part-payment (about 8 shifted buyers prevent 1 cancellation). Test: A/B, about 650 orders per arm. Margin is an assumption.',v:{t:'be'},fm:'Break-even ceiling = 12.2% × ₹1,736 average COD order = ₹212 on revenue · × margin for profit',rc:'Pay up to the break-even, not a rupee more.'},
+{id:'end',dk:1,tag:'CASH OR CLICK?',h:'Thank you.',p:'Questions?',v:{t:'none'},fm:'',rc:''}];
+Q.forEach(q=>{document.querySelector('.nav').insertAdjacentHTML('beforebegin',`<section class="slide ${q.dk?'':'lt'}" id="s-${q.id}"><p class="tag">${q.tag}</p><h2>${q.h}</h2><p style="color:var(--ink)">${q.p}</p><div id="v-${q.id}"></div>${q.fm?`<p class="fm">${q.fm}</p>`:''}${q.rc?`<p class="right"><b>Right call?</b> ${q.rc}</p>`:''}</section>`);init[q.id]=()=>R(q)});
+Object.assign(Q.find(q=>q.id=='disp'),{p:'Capsule = x̄ ± 1 SD, lighter band = x̄ ± 2 SD. COD and Prepaid overlap almost completely. At least 75% of orders lie within 2 SD (Chebyshev), and x̄ − 2s drops below ₹0, another sign of the right skew.',v:{t:'cap'}});
+Object.assign(Q.find(q=>q.id=='corr'),{p:'Bar width = share of orders, bar height = cancellation rate. The dashed line is the 11.4% you would see if payment mode did not matter. Covariance is that gap, weighted by share. Hover anything.',v:{t:'cov'}});
+Object.assign(Q.find(q=>q.id=='bayes'),{p:'Each dot is one order. Click through to filter: first COD only, then only the cancelled.',v:{t:'grid'}});
+function R(q){const v=q.v,box=$('#v-'+q.id),T0=performance.now(),cl=k=>getComputedStyle(box).getPropertyValue(k).trim(),
+ cvs=()=>{box.innerHTML='<canvas width="960" height="300" style="width:100%;max-width:960px;max-height:38vh"></canvas>';return box.firstChild};
+ if(v.t=='bars'){box.innerHTML=v.i.map(r=>`<div class="rw" ${r[4]?`data-tip="${r[4]}"`:''}><span>${r[0]}</span><i data-w="${r[1]/r[2]*100}%" style="background:var(--${r[3]})"></i><b>${r[5]}</b></div>`).join('');setTimeout(()=>box.querySelectorAll('i').forEach(b=>b.style.width=b.dataset.w),150);return}
+ if(v.t=='cap'){const c=cvs(),x=c.getContext('2d'),X=u=>40+(u+2000)/7500*880,L=[['COD',1725.25,1721.94,'--cod',90,'CV 1.00 · variance ₹² 2,965,069 · IQR ₹1,723'],['Prepaid',1671.77,1630.57,'--pre',190,'CV 0.98 · variance ₹² 2,658,756 · IQR ₹1,524']];
+  c.onmousemove=e=>{const rc=c.getBoundingClientRect(),py=(e.clientY-rc.top)/rc.height*300,l=L.find(l=>Math.abs(py-l[4])<35);if(l)c.dataset.tip='<b>'+l[0]+'</b><br>'+l[5];else delete c.dataset.tip};
+  return()=>{const p=ease((performance.now()-T0)/1500);x.clearRect(0,0,960,300);x.strokeStyle=cl('--ink');x.lineWidth=1;x.beginPath();x.moveTo(40,255);x.lineTo(920,255);x.stroke();x.fillStyle=cl('--mu');x.font='12px JetBrains Mono';for(let u=-2000;u<=5000;u+=1000)x.fillText((u<0?'−₹':'₹')+fmt(Math.abs(u)),X(u)-14,275);
+  x.strokeStyle=cl('--red');x.setLineDash([4,4]);x.beginPath();x.moveTo(X(0),40);x.lineTo(X(0),255);x.stroke();x.setLineDash([]);x.fillStyle=cl('--red');x.fillText('₹0',X(0)+4,36);
+  L.forEach(l=>{const m=l[1],s=l[2],rr=(a,h,y)=>{x.beginPath();x.roundRect(X(m-a*p),y-h/2,X(m+a*p)-X(m-a*p),h,h/2)};x.globalAlpha=.2;x.fillStyle=cl(l[3]);rr(2*s,64,l[4]);x.fill();x.globalAlpha=1;rr(s,36,l[4]);x.fill();x.fillStyle=cl('--ink');x.beginPath();x.arc(X(m),l[4],6,0,7);x.fill();x.font='700 14px Inter Tight';x.fillText(l[0]+' · x̄ ₹'+fmt(m)+' · s ₹'+fmt(s),X(Math.max(m-2*s,-1900))+6,l[4]-40)})}}
+ if(v.t=='cov'){const c=cvs(),x=c.getContext('2d'),G=[['COD',.3127,20.3,'--cod','<b>COD</b> · 31.3% of orders<br>95 of 469 cancelled = 20.3%'],['Prepaid',.6873,7.4,'--pre','<b>Prepaid</b> · 68.7% of orders<br>76 of 1,031 cancelled = 7.4%']],R3=[['COD × Cancelled',.188,'--red','Covariance 0.0277<br>r² = 3.5% · p < 0.001'],['Order value × Cancelled',.044,'--cod','Covariance ₹23.2 · p = 0.089'],['COD × Order value',.015,'--pre','Covariance ₹11.5 · p = 0.563']],Y=r=>270-r/30*230;
+  c.onmousemove=e=>{const rc=c.getBoundingClientRect(),px=(e.clientX-rc.left)/rc.width*960,py=(e.clientY-rc.top)/rc.height*300;let t=null;if(px>40&&px<400){const cod=px<40+360*.3127;if(Math.abs(py-Y(11.4))<8)t='<b>If payment did not matter</b><br>overall rate 11.4% (171 of 1,500)';else if(py>Y(cod?20.3:7.4))t=G[cod?0:1][4]}else if(px>520){const i=Math.floor((py-40)/70);if(R3[i])t='<b>'+R3[i][0]+'</b><br>'+R3[i][3]}if(t)c.dataset.tip=t;else delete c.dataset.tip};
+  return()=>{const p=ease((performance.now()-T0)/1400);x.clearRect(0,0,960,300);x.strokeStyle=cl('--ink');x.lineWidth=1;x.beginPath();x.moveTo(40,270);x.lineTo(400,270);x.stroke();let x0=40;
+  G.forEach(g=>{const w=360*g[1];x.fillStyle=cl(g[3]);x.fillRect(x0+2,Y(g[2]*p),w-4,270-Y(g[2]*p));x.fillStyle=cl('--ink');x.font='700 14px Inter Tight';x.fillText(g[0]+' '+(g[2]*p).toFixed(1)+'%',x0+6,Y(g[2]*p)-8);x0+=w});
+  x.strokeStyle=cl('--red');x.lineWidth=2;x.setLineDash([6,5]);x.beginPath();x.moveTo(40,Y(11.4));x.lineTo(400,Y(11.4));x.stroke();x.setLineDash([]);x.fillStyle=cl('--red');x.font='12px JetBrains Mono';x.fillText('11.4% if payment did not matter',160,Y(11.4)-6);x.fillStyle=cl('--mu');x.fillText('bar width = share of orders',100,292);
+  R3.forEach((r,i)=>{const y=60+i*70;x.fillStyle=cl('--ink');x.font='700 14px Inter Tight';x.fillText(r[0],520,y);x.fillStyle=cl(r[2]);x.fillRect(520,y+10,r[1]/.25*300*p,24);x.fillStyle=cl('--ink');x.fillText('r = '+(r[1]*p).toFixed(2),530+r[1]/.25*300*p,y+28)})}}
+ if(v.t=='grid'){box.innerHTML='<canvas width="960" height="300" style="width:100%;max-width:960px;max-height:34vh"></canvas><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><button class="b" id="gs">COD only ▸</button><div class="big" id="gp"></div></div><p id="gt" style="color:var(--ink)"></p>';const c=box.firstChild,x=c.getContext('2d');let st=0;
+  const ix=[...Array(1500).keys()].sort(()=>Math.random()-.5),D=ix.map((u,i)=>({g:u<469?1:0,i,a:0})),kc=[0,0];D.forEach(d=>{d.k=kc[d.g]++;d.c=d.g?d.k<95:d.k<76;d.x=40+(d.i%50)*17.6+4;d.y=18+Math.floor(d.i/50)*8.6});
+  const T=['1,500 orders. COD is 469 of them: P(COD) = 31.3%.','Keep only COD: 95 of 469 cancel. P(Cancelled | COD) = 20.3%.','Keep only the cancelled: 95 of 171 are COD. P(COD | Cancelled) = 55.6%.'],B=['COD only ▸','Cancelled only ▸','Start again ↻'],Pc=['31.3%','20.3%','55.6%'],ui=()=>{$('#gt').textContent=T[st];$('#gs').textContent=B[st];$('#gp').textContent=Pc[st]};$('#gs').onclick=()=>{st=(st+1)%3;ui()};ui();
+  return()=>{const t=(performance.now()-T0)/1000;x.clearRect(0,0,960,300);D.forEach(d=>{const ta=t>d.i/1500*1.4?(st==0?1:st==1?(d.g?1:.08):(d.c?1:.06)):0;d.a+=(ta-d.a)*.12;x.globalAlpha=Math.max(d.a,0);x.fillStyle=st==1&&d.g&&d.c?cl('--red'):cl(d.g?'--cod':'--pre');x.beginPath();x.arc(d.x,d.y,3,0,7);x.fill()});x.globalAlpha=1}}
+ if(v.t=='rows'){box.innerHTML=v.i.map((r,k)=>`<div class="fr" style="transition-delay:${k*.25}s"><b style="color:var(--red)">${r[0]}</b><span>${r[1]}</span><b>${r[2]}</b></div>`).join('');setTimeout(()=>box.querySelectorAll('.fr').forEach(e=>e.classList.add('in')),100);return}
+ if(v.t=='nl'){const c=cvs(),x=c.getContext('2d'),X=u=>40+u/5000*880,M=[[1066.74,'median ₹1,067','--ink',110,'<b>Median ₹1,067</b><br>Half of orders are smaller'],[1688.49,'mean ₹1,688','--cod',70,'<b>Mean ₹1,688</b><br>SD ₹1,659 · skew 2.24']];
+  c.onmousemove=e=>{const px=(e.clientX-c.getBoundingClientRect().left)/c.getBoundingClientRect().width*960,m=M.find(m=>Math.abs(px-X(m[0]))<14);if(m)c.dataset.tip=m[4];else delete c.dataset.tip};
+  return()=>{const p=ease((performance.now()-T0)/1500);x.clearRect(0,0,960,300);x.fillStyle=cl('--ln');x.fillRect(X(500),130,X(1000)-X(500),50);x.strokeStyle=cl('--ink');x.lineWidth=2;x.beginPath();x.moveTo(40,180);x.lineTo(920,180);x.stroke();x.font='12px JetBrains Mono';x.fillStyle=cl('--mu');for(let u=0;u<=5000;u+=500)x.fillText(u?'₹'+fmt(u):'0',X(u)-12,205);x.fillText('mode class ₹500–1,000',X(500),122);
+  M.forEach(m=>{const px=X(2500)+(X(m[0])-X(2500))*p;x.fillStyle=cl(m[2]);x.beginPath();x.arc(px,180,9,0,7);x.fill();x.font='700 14px Inter Tight';x.fillText(m[1],px-30,m[3])});x.fillStyle=cl('--mu');x.font='13px Inter Tight';x.fillText('right-skewed: the long tail pulls the mean above the median',X(1800),250)}}
+ if(v.t=='curve'){const c=cvs(),x=c.getContext('2d'),X=u=>40+(u-v.lo)/(v.hi-v.lo)*880,Y=u=>260-Math.exp(-u*u/2)*190;
+  return()=>{const p=ease((performance.now()-T0)/1800),s=v.lo+(v.s-v.lo)*p;x.clearRect(0,0,960,300);x.fillStyle=cl('--red');x.globalAlpha=.35;x.beginPath();x.moveTo(X(v.cr),260);for(let u=v.cr;u<=v.hi;u+=.05)x.lineTo(X(u),Y(u));x.lineTo(X(v.hi),260);x.fill();x.globalAlpha=1;
+  x.strokeStyle=cl('--ink');x.lineWidth=2;x.beginPath();for(let u=v.lo;u<=v.hi;u+=.05)u==v.lo?x.moveTo(X(u),Y(u)):x.lineTo(X(u),Y(u));x.stroke();x.beginPath();x.moveTo(40,260);x.lineTo(920,260);x.stroke();
+  x.strokeStyle=cl('--red');x.setLineDash([6,5]);x.beginPath();x.moveTo(X(v.cr),260);x.lineTo(X(v.cr),50);x.stroke();x.setLineDash([]);x.fillStyle=cl('--red');x.font='700 14px Inter Tight';x.fillText('5% cut-off '+v.cr,X(v.cr)+6,48);
+  const big=v.s>v.cr,px=X(s);x.strokeStyle=cl(big?'--red':'--pre');x.lineWidth=5;x.beginPath();x.moveTo(px,260);x.lineTo(px,90);x.stroke();x.fillStyle=cl(big?'--red':'--pre');x.font='800 28px Inter Tight';x.fillText(v.n+' = '+s.toFixed(2),px>700?px-150:px+10,100);
+  if(p>=1){x.font='800 22px Inter Tight';x.fillText(big?'Reject H₀':'Fail to reject H₀',px>700?px-300:px+10,140)}}}
+ if(v.t=='bin'){box.innerHTML='<canvas width="960" height="300" style="width:100%;max-width:960px;max-height:36vh"></canvas><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><input type="range" id="bk" min="0" max="40" value="15"><b id="br"></b></div>';const c=box.firstChild,x=c.getContext('2d'),r=$('#bk');
+  const pm=p=>{const a=[];let q=Math.pow(1-p,100);for(let k=0;k<=100;k++){a.push(q);q=q*(100-k)/(k+1)*p/(1-p)}return a},A=pm(95/469),B=pm(76/1031),tl=(a,k)=>a.slice(k).reduce((s,t)=>s+t,0)*100;
+  r.oninput=()=>{const k=+r.value;$('#br').textContent='k = '+k+'  ·  P(X ≥ k): COD '+tl(A,k).toFixed(1)+'%  ·  Prepaid '+tl(B,k).toFixed(2)+'%'};r.oninput();
+  return()=>{const p=ease((performance.now()-T0)/1400),k=+r.value,w=880/41;x.clearRect(0,0,960,300);for(let i=0;i<=40;i++){[[A,'--cod'],[B,'--pre']].forEach(m=>{x.globalAlpha=(i>=k?.85:.3);x.fillStyle=cl(m[1]);const h=m[0][i]/.16*240*p;x.fillRect(40+i*w+1,270-h,w-2,h)})}x.globalAlpha=1;x.fillStyle=cl('--mu');x.font='12px JetBrains Mono';for(let i=0;i<=40;i+=5)x.fillText(i,40+i*w,290);x.fillStyle=cl('--cod');x.fillText('COD · mean 20.3',560,40);x.fillStyle=cl('--pre');x.fillText('Prepaid · mean 7.4',560,60)}}
+ if(v.t=='clt'){box.innerHTML='<canvas width="960" height="300" style="width:100%;max-width:960px;max-height:34vh"></canvas><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><input type="range" id="cn" min="5" max="500" step="5" value="30"><b id="cr"></b></div>';const c=box.firstChild,x=c.getContext('2d'),r=$('#cn');let cnt,n,s,s2,sd,lo,bw;
+  const samp=()=>{let u=Math.random()*1500,i=0,a=0;while(i<10&&u>a+F[i]){a+=F[i];i++}return i<10?i*500+Math.random()*500:5000+Math.min(8450,-Math.log(1-Math.random())*2000)};
+  const rs=()=>{const k=+r.value;sd=1659.29/Math.sqrt(k);bw=sd/4;lo=1688-16*bw;cnt=Array(32).fill(0);n=0;s=0;s2=0};r.oninput=rs;rs();
+  return()=>{const k=+r.value;for(let j=0;j<4&&n<2500;j++){let m=0;for(let i=0;i<k;i++)m+=samp();m/=k;n++;s+=m;s2+=m*m;const b=Math.floor((m-lo)/bw);if(b>=0&&b<32)cnt[b]++}
+   x.clearRect(0,0,960,300);const mx=Math.max(10,...cnt),w=880/32;cnt.forEach((q,i)=>{x.fillStyle=cl('--pre');x.fillRect(40+i*w+1,270-q/mx*240,w-2,q/mx*240)});x.strokeStyle=cl('--red');x.lineWidth=3;x.setLineDash([8,6]);x.beginPath();for(let i=0;i<=128;i++){const xv=lo+i*bw/4,e=n*bw*Math.exp(-((xv-1688)**2)/(2*sd*sd))/(sd*2.5066),py=270-e/mx*240;i?x.lineTo(40+i*w/4,py):x.moveTo(40,py)}x.stroke();x.setLineDash([]);
+   const mean=s/Math.max(n,1),dd=Math.sqrt(Math.max(s2/Math.max(n,1)-mean*mean,0));$('#cr').textContent='n = '+k+'  ·  '+n+' averages  ·  SD of means ₹'+fmt(dd)+'  ·  theory σ÷√n = ₹'+fmt(sd)}}
+ if(v.t=='be'){box.innerHTML=`<div class="be" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px"><label>COD buyers shifted to Prepaid <b id="a1"></b><input id="s1" type="range" min="0" max="50" value="20"></label><label>COD cancellations cut by confirmation <b id="a2"></b><input id="s2" type="range" min="0" max="50" value="25"></label><label>Incentive per shifted buyer <b id="a3"></b><input id="s3" type="range" min="0" max="400" step="10" value="20"></label><label>Assumed margin <b id="a4"></b><input id="s4" type="range" min="5" max="40" value="15"></label></div><div class="big" id="bo"></div><p id="bt" style="color:var(--ink)"></p>`;
+  const u=()=>{const sh=+$('#s1').value/100,rd=+$('#s2').value/100,inc=+$('#s3').value,m=+$('#s4').value,mv=469*sh,cn=76+mv*.0737+(469-mv)*.2026*(1-rd),sv=171-cn,ce=212*m/100,ok=inc<=ce;
+   $('#a1').textContent=Math.round(sh*100)+'%';$('#a2').textContent=Math.round(rd*100)+'%';$('#a3').textContent='₹'+inc;$('#a4').textContent=m+'%';$('#bo').textContent='11.4% → '+(cn/15).toFixed(1)+'%';$('#bo').style.color=cl(ok?'--pre':'--red');
+   $('#bt').textContent='Avoids '+sv.toFixed(1)+' cancellations (about ₹'+fmt(sv*1951.5)+' of order value). Break-even incentive at '+m+'% margin: ₹'+ce.toFixed(0)+' per shifted buyer (₹212 on revenue, before logistics savings). Your ₹'+inc+' is '+(ok?'below break-even: worth it.':'above break-even: too costly.')};
+  box.querySelectorAll('input').forEach(i=>i.oninput=u);u()}}
+go(Math.max(0,N.indexOf(location.hash.slice(1))));
+</script></body></html>
