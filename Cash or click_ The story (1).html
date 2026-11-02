@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080a09"><meta name="description" content="Cash or click? An interactive, data-grounded MBA business statistics story in 12 slides.">
+<meta name="theme-color" content="#080a09"><meta name="description" content="Cash or click? An interactive, data-grounded MBA business statistics story in 13 slides.">
 <title>Cash or click?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -48,6 +48,23 @@ footer{left:55px;right:55px;height:65px}.navbtn{border-radius:22px;padding:10px 
 .calc-actions{display:flex;gap:12px;margin-top:20px}
 .calc-actions .button:disabled{opacity:.55;cursor:default}
 @keyframes step-in{from{opacity:0;transform:translateY(6px)}}
+#s-find .solution{position:absolute;left:65px;right:65px;top:290px;height:395px}
+.levers{position:absolute;left:0;top:0;width:1080px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.lever{border:1px solid var(--line);border-top:4px solid var(--pre);border-radius:6px;padding:22px 24px;min-height:210px;display:flex;flex-direction:column;gap:12px;background:rgba(36,124,112,.04)}
+.lever:last-child{border-top-color:var(--cod);background:rgba(213,102,44,.04)}
+.lever span,.solution-flow span,.solution-evidence span{font:11px 'JetBrains Mono',monospace;letter-spacing:1px;color:var(--muted)}
+.lever b{font-size:29px;letter-spacing:-.8px;line-height:1.1}
+.lever p{font-size:18px;line-height:1.4;color:var(--muted)}
+.solution-flow{position:absolute;left:0;top:262px;width:1080px;display:flex;align-items:center;gap:16px}
+.solution-flow div{flex:1;border-left:2px solid var(--line);padding:4px 0 4px 16px}
+.solution-flow div:first-child{border-left-color:var(--red)}
+.solution-flow p{font-size:17px;line-height:1.35;margin-top:6px!important}
+.solution-flow i{font-style:normal;font-size:22px;color:var(--muted)}
+.solution-evidence{position:absolute;left:1140px;top:0;width:330px;border-left:1px solid var(--line);padding-left:30px;display:flex;flex-direction:column}
+.solution-evidence b{font-size:62px;letter-spacing:-2.5px;color:var(--cod);margin-top:14px;line-height:1}
+.solution-evidence b.pre{color:var(--pre)}
+.solution-evidence p{font-size:17px;color:var(--muted)}
+.solution-evidence small{font:12px 'JetBrains Mono',monospace;color:var(--muted);margin-top:22px}
 </style>
 </head>
 <body>
@@ -402,7 +419,7 @@ const paletteFrame=frame;frame=function(now){const dt=Math.min(.04,(now-lastTime
 
 /* Simplified twelve-slide edition. Removed slides stay in the DOM so every
  * index-based chart keeps working; navigation simply skips them. */
-const VISIBLE=[0,1,2,3,5,6,7,8,9,11,12,19],slideNo=i=>String(VISIBLE.indexOf(i)+1).padStart(2,'0'),TOTAL=String(VISIBLE.length).padStart(2,'0');
+const VISIBLE=[0,1,2,3,5,6,7,8,9,11,12,17,19],slideNo=i=>String(VISIBLE.indexOf(i)+1).padStart(2,'0'),TOTAL=String(VISIBLE.length).padStart(2,'0');
 function setSlide(i,o){Object.assign(slides[i],o);const s=$('#s-'+slides[i].id),put=(sel,v)=>{const el=s.querySelector(sel);if(el&&v!=null)el.innerHTML=v};put(s.querySelector('h2')?'h2':'h1',o.title);put('.dek',o.dek);put('.aside .stat',o.stat);put('.aside .unit',o.unit);put('.aside .explain',o.explain);put('.aside .mini',o.mini);put('.formula',o.formula);put('.right-call p',o.call)}
 const ca=D.cod,pa=D.pre,al=D.all,sortedValues=D.rows.map(r=>r.value).sort((a,b)=>a-b);
 const zMean=(ca.mean-pa.mean)/Math.sqrt(ca.variance/ca.n+pa.variance/pa.n),zSE=Math.sqrt(al.rate*(1-al.rate)*(1/ca.n+1/pa.n)),Z_CRIT=1.645;
@@ -434,6 +451,7 @@ if(i===8)return [['P(COD)',`${ca.n} ÷ ${num(al.n)} = ${f(ca.n/al.n,4)}`,3],['P(
 if(i===9){const steps=[['Set up',`n = 15 orders · success = order cancelled · k = ${k}`]];for(const [name,g,arr] of [['COD',ca,binA],['Prepaid',pa,binB]]){const q=1-g.rate;steps.push([`${name} p and q`,`p = ${g.cancel} ÷ ${num(g.n)} = ${f(g.rate,4)} · q = 1 − p = ${f(q,4)}`,1],[`${name} P(X = ${k})`,`C(15,${k}) × p<sup>${k}</sup> × q<sup>${15-k}</sup><br>= ${comb(15,k)} × ${f(g.rate,4)}<sup>${k}</sup> × ${f(q,4)}<sup>${15-k}</sup><br>= ${f(arr[k],4)} = ${pc(arr[k],2)}`],[`${name} expected cancellations`,`E[X] = n × p = 15 × ${f(g.rate,4)} = ${f(15*g.rate,2)}`])}return steps}
 if(i===11){const se=Math.sqrt(ca.variance/ca.n+pa.variance/pa.n);return [['Hypotheses','H₀: μCOD ≤ μPrepaid · H₁: μCOD > μPrepaid · α = 0.05 (one-tailed)'],['Means',`x̄COD = ${money(ca.mean,2)} · x̄Prepaid = ${money(pa.mean,2)}`,6],['Variances',`s²COD = ${num(ca.variance,2)} · s²Prepaid = ${num(pa.variance,2)}`,6],['Sample sizes',`nCOD = ${ca.n} · nPrepaid = ${num(pa.n)}`,3],['Standard error',`SE = √(s²COD/nCOD + s²Prepaid/nPrepaid)<br>= √(${num(ca.variance/ca.n,2)} + ${num(pa.variance/pa.n,2)}) = ${f(se,2)}`],['z calculated',`z = (${f(ca.mean,2)} − ${f(pa.mean,2)}) ÷ ${f(se,2)} = ${f(ca.mean-pa.mean,2)} ÷ ${f(se,2)} = ${f(zMean,4)}`],['z critical','α = 0.05, one-tailed (right) → z critical = 1.645'],['Decision',`${f(zMean,2)} < 1.645 → do not reject H₀. COD orders are not significantly higher in value.`]]}
 if(i===12)return [['Hypotheses','H₀: pCOD ≤ pPrepaid · H₁: pCOD > pPrepaid · α = 0.05 (one-tailed)'],['Sample proportions',`pCOD = ${f(ca.rate,4)} · pPrepaid = ${f(pa.rate,4)}`,1],['Pooled proportion',`p̄ = ${al.cancel} ÷ ${num(al.n)} = ${f(al.rate,4)} · 1 − p̄ = ${f(1-al.rate,4)}`,1],['Standard error',`SE = √[p̄(1 − p̄)(1/nCOD + 1/nPrepaid)]<br>= √[${f(al.rate,4)} × ${f(1-al.rate,4)} × (1/${ca.n} + 1/${num(pa.n)})] = ${f(zSE,4)}`],['z calculated',`z = (${f(ca.rate,4)} − ${f(pa.rate,4)}) ÷ ${f(zSE,4)} = ${f(ca.rate-pa.rate,4)} ÷ ${f(zSE,4)} = ${f(D.z,4)}`],['z critical','α = 0.05, one-tailed (right) → z critical = 1.645'],['Decision',`${f(D.z,2)} > 1.645 → reject H₀. COD orders cancel significantly more.`]];
+if(i===17)return [['COD cancellation rate',`pCOD = ${f(ca.rate,4)} = ${pc(ca.rate,2)}`,1],['Prepaid cancellation rate',`pPrepaid = ${f(pa.rate,4)} = ${pc(pa.rate,2)}`,1],['Is the gap real?',`z calculated = ${f(D.z,2)} > z critical = 1.645 → COD cancels significantly more`,12],['How many times as often?',`${f(ca.rate,4)} ÷ ${f(pa.rate,4)} = ${f(ca.rate/pa.rate,2)}×`],['Illustration: shift 100 COD orders',`Cancellations as COD: 100 × ${f(ca.rate,4)} = ${f(100*ca.rate,1)}<br>Cancellations as prepaid: 100 × ${f(pa.rate,4)} = ${f(100*pa.rate,1)}<br>Fewer cancellations: ${f(100*ca.rate,1)} − ${f(100*pa.rate,1)} = ${f(100*(ca.rate-pa.rate),1)} per 100 shifted orders`],['Assumption','Shifted buyers behave like current prepaid buyers. Only a real A/B test with real orders can confirm this.'],['What to measure in the test','Prepaid share of orders ↑ · checkout conversion holds · cancellations ↓ · revenue per order placed ↑']];
 return []}
 function calcHtml(i,reveal){const steps=calcSteps(i);if(!steps.length)return '';return `<h3>Calculations, step by step</h3><ol class="calc-steps">${steps.map(([label,m,from])=>`<li${reveal?' hidden':''}><b>${label}</b><span class="calc-math">${m}</span>${from!=null?ref(from):''}</li>`).join('')}</ol>${reveal?`<div class="calc-actions"><button class="button primary" id="calc-next"></button><button class="button" id="calc-all">Show all</button></div>`:''}`}
 const baseModal=openModal;openModal=function(kind){if(!['notes','working','outline'].includes(kind))return baseModal(kind);lastFocus=document.activeElement;const i=state.index,s=slides[i];let title,html;
@@ -444,9 +462,15 @@ $('#modal-title').textContent=title;$('#modal-body').innerHTML=html;$('#modal').
 const next=$('#calc-next');if(next){const items=$$('#modal-body .calc-steps li'),label=()=>{const shown=items.filter(li=>!li.hidden).length;next.textContent=shown<items.length?`Show step ${shown+1} of ${items.length} →`:'All steps shown';next.disabled=shown===items.length;$('#calc-all').hidden=shown===items.length};next.onclick=()=>{const li=items.find(li=>li.hidden);if(li){li.hidden=false;li.scrollIntoView({block:'nearest',behavior:reduced?'auto':'smooth'})}label();if(next.disabled)$('#modal-close').focus()};$('#calc-all').onclick=()=>{items.forEach(li=>li.hidden=false);label();$('#modal-close').focus()};$('#modal-body .calc-steps').onclick=()=>next.click();label();next.focus()}else $('#modal-close').focus()};
 addEventListener('keydown',e=>{if($('#modal').classList.contains('open')&&['ArrowRight','ArrowDown'].includes(e.key)&&$('#calc-next')&&!$('#calc-next').disabled){e.preventDefault();$('#calc-next').click()}});
 
-VISIBLE.forEach(i=>{const e=$('#s-'+slides[i].id+' .eyebrow');if(e&&i&&i!==19)e.textContent=`${acts[actFor(i)]} / ${slideNo(i)}`});
+/* The solution: nudge customers toward prepaid, test it, then confirm with real orders. */
+$('#s-find .findings').remove();
+$('#s-find .heading').insertAdjacentHTML('afterend',`<div class="solution"><div class="levers">${[['01 / PRICE','A small discount','A little off for paying online rewards the cheaper, more reliable choice.'],['02 / DEFAULT','Prepaid pre-selected','UPI or card is the default at checkout. COD stays one tap away.'],['03 / FEE','A small COD fee',`COD cancels ${f(pcr,1)}× as often as prepaid, so it carries a small cost.`]].map(([tag,h,p])=>`<div class="lever"><span>${tag}</span><b>${h}</b><p>${p}</p></div>`).join('')}</div><div class="solution-flow"><div><span>DON'T</span><p>Ban COD. That risks losing buyers.</p></div><i>→</i><div><span>TEST</span><p>A/B test: watch prepaid share and checkout conversion.</p></div><i>→</i><div><span>CONFIRM</span><p>The data is synthetic. Confirm with real orders.</p></div></div><aside class="solution-evidence"><span>WHY PREPAID</span><b>${pc(D.cod.rate)}</b><p>of COD orders cancel</p><b class="pre">${pc(D.pre.rate)}</b><p>of prepaid orders cancel</p><small>z = ${f(D.z,2)} > 1.645 · slide ${slideNo(12)}</small></aside></div>`);
+setSlide(17,{short:'The solution',title:'Make prepaid <em>the easy choice.</em>',dek:'Don’t ban COD. Nudge buyers toward prepaid, then test it.',formula:`Shift 100 COD orders to prepaid → expected cancellations ${f(100*D.cod.rate,1)} → ${f(100*D.pre.rate,1)} (illustrative; assumes shifted buyers behave like prepaid buyers)`,call:'<b>If</b> prepaid share rises without hurting conversion, revenue goes up.',note:'So what should a company actually do with this? Our data suggests prepaid customers are more valuable, so the goal is to move more customers toward prepaying. We would not ban cash on delivery, because that risks losing buyers. Instead, make prepaid the easier and cheaper choice: a small discount, prepaid as the default at checkout, and a small fee on COD. Then test it. If prepaid share goes up without hurting conversion, revenue goes up. Because this data is synthetic, the next step is to confirm it with real orders.'});
+$('#s-find .eyebrow').textContent='THE SOLUTION / '+slideNo(17);
+const solutionDraw=drawSlide;drawSlide=function(k,t,dt){if(k===17)return;solutionDraw(k,t,dt)};
+VISIBLE.forEach(i=>{const e=$('#s-'+slides[i].id+' .eyebrow');if(e&&i&&i!==19&&i!==17)e.textContent=`${acts[actFor(i)]} / ${slideNo(i)}`});
 $('#progress').innerHTML=VISIBLE.map(i=>`<button aria-label="Slide ${+slideNo(i)}: ${slides[i].short}" title="${+slideNo(i)}. ${slides[i].short}" data-jump="${i}"></button>`).join('');$$('#progress button').forEach(b=>b.onclick=()=>go(+b.dataset.jump));
-const visibleGo=go;go=function(i,fromHash=false){i=clamp(i,0,19);if(!VISIBLE.includes(i))i=i>state.index?(VISIBLE.find(v=>v>i)??19):([...VISIBLE].reverse().find(v=>v<i)??0);visibleGo(i,fromHash);$('#count').textContent=slideNo(state.index)+' / '+TOTAL;$('#announcement').textContent=`Slide ${+slideNo(state.index)} of ${VISIBLE.length}. ${slides[state.index].short}`;$$('#progress button').forEach(b=>{const j=+b.dataset.jump;b.classList.toggle('current',j===state.index);b.classList.toggle('past',j<state.index);b.setAttribute('aria-current',j===state.index?'step':'false')})};
+const visibleGo=go;go=function(i,fromHash=false){i=clamp(i,0,19);if(!VISIBLE.includes(i))i=i>state.index?(VISIBLE.find(v=>v>i)??19):([...VISIBLE].reverse().find(v=>v<i)??0);visibleGo(i,fromHash);$('#count').textContent=slideNo(state.index)+' / '+TOTAL;if(state.index===17)$('#chapter').textContent='ACT 5 / THE DECISION';$('#announcement').textContent=`Slide ${+slideNo(state.index)} of ${VISIBLE.length}. ${slides[state.index].short}`;$$('#progress button').forEach(b=>{const j=+b.dataset.jump;b.classList.toggle('current',j===state.index);b.classList.toggle('past',j<state.index);b.setAttribute('aria-current',j===state.index?'step':'false')})};
 $$('.slide').forEach(s=>s.inert=true);updateExplorer();updateBin();updateScenario();const initial=slides.findIndex(s=>s.id===location.hash.slice(1));go(initial>=0?initial:0,true);if(!location.hash)history.replaceState(null,'','#globe');setTargets();requestAnimationFrame(frame);
 // Small read-only surface for reproducible smoke checks, no app dependencies.
 window.deck={go,slides,D,state,metrics,scenario,get particles(){return particles},get hits(){return hits},setTargets};

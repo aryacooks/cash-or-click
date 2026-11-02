@@ -2,7 +2,7 @@
 
 Live presentation: https://aryacooks.github.io/cash-or-click/
 
-A self-contained, 12-slide HTML presentation built with native JavaScript, Canvas, SVG and CSS. No runtime libraries or build step. All order data and geographic geometry are embedded in `index.html`; Google Fonts are optional and have local fallbacks.
+A self-contained, 13-slide HTML presentation built with native JavaScript, Canvas, SVG and CSS. No runtime libraries or build step. All order data and geographic geometry are embedded in `index.html`; Google Fonts are optional and have local fallbacks.
 
 Run locally:
 
